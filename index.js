@@ -68,6 +68,16 @@ module.exports = function proxyMiddleware(options) {
       myRes.on('error', function (err) {
         next(err);
       });
+      if (opts.observeProxy) {
+        let data = '';
+        myRes.on('data', (chunk) => {
+          data += chunk.toString();
+        });
+
+        myRes.on('end', () => {
+          opts.observeProxy(req, data);
+        });
+      }
       myRes.pipe(resp);
     });
     myReq.on('error', function (err) {
