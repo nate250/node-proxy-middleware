@@ -69,7 +69,7 @@ module.exports = function proxyMiddleware(options) {
         next(err);
       });
       if (opts.observeProxy) {
-        let data = '';
+        var data = '';
         myRes.on('data', (chunk) => {
           data += chunk.toString();
         });
